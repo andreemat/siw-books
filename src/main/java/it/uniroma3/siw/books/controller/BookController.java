@@ -3,6 +3,7 @@ package it.uniroma3.siw.books.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +30,7 @@ import it.uniroma3.siw.books.model.Review;
 import it.uniroma3.siw.books.repository.BookRepository;
 import it.uniroma3.siw.books.service.*;
 import it.uniroma3.siw.books.validator.BookValidator;
-import jakarta.transaction.Transactional;
+
 import jakarta.validation.Valid;
 
 @Controller
@@ -95,12 +97,14 @@ public class BookController {
     
     
     
-
+    @Transactional(readOnly = true)
 	@GetMapping("/books/{id}")
 	public String viewBook(@PathVariable("id") Long id, Model model) {
 		Book book =this.bookService.findById(id);
 		model.addAttribute("book",book );
 		model.addAttribute("review",new Review());
+		model.addAttribute("authors",book.getAuthors());
+		model.addAttribute("reviews",book.getReviews());
 		Double media=this.reviewService.getAverageVote(id);
 		if(media!=null)
 			model.addAttribute("avgVote",String.format("%.2f",media));
@@ -137,7 +141,7 @@ public class BookController {
 
 	    
 	    if (authorIds != null && !authorIds.isEmpty()) {
-	        List<Author> selectedAuthors = this.authorService.findAllById(authorIds);
+	        Set<Author> selectedAuthors = (Set<Author>) this.authorService.findAllById(authorIds);
 	        book.setAuthors(selectedAuthors); 
 	    }
 
@@ -158,8 +162,9 @@ public class BookController {
 	public String showEditBookForm(@PathVariable("id") Long id, Model model) {
 		List<Author> otherAuthors = new ArrayList<>(authorService.findAll());
 	    Book book = (Book)this.bookService.findById(id); 
-	    List<Author> bookAuthors = book.getAuthors();
+	    Set<Author> bookAuthors = book.getAuthors();
 	    model.addAttribute("book", book); 
+	    model.addAttribute("authors", book.getAuthors());
 	    model.addAttribute("avgVote", this.reviewService.getAverageVote(id)); 
 	    model.addAttribute("bookAuthors",bookAuthors);	 
 	    List<Image> galleryImages = book.getImages()
@@ -177,7 +182,7 @@ public class BookController {
 	                           @RequestParam(name = "filterSearchAuthor", required = false) String filterSearchAuthor) {
 
 	    Book book = this.bookService.findById(id);
-	    List<Author> bookAuthors = book.getAuthors();
+	    Set<Author> bookAuthors = book.getAuthors();
 
 	    List<Author> allAuthors;
 

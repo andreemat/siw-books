@@ -36,7 +36,7 @@
 
 			<p>
 			  <span class="fw-bold">Autori: </span>
-			  <span th:each="author, iterStat : ${book.authors}">
+			  <span th:each="author, iterStat : ${authors}">
 			    <span th:text="${author.name + ' ' + author.surname}"></span>
 			    <span th:if="${!iterStat.last}">, </span>
 			  </span>
@@ -148,12 +148,12 @@
     <!-- Lista recensioni -->
 	<h4 class="mt-4">Recensioni</h4>
 
-	          <div th:if="${#lists.isEmpty(book.reviews)}" class="alert alert-secondary">
+	          <div th:if="${#lists.isEmpty(reviews)}" class="alert alert-secondary">
 	              Nessuna recensione disponibile.
 	          </div>
 
-	          <div th:if="${!#lists.isEmpty(book.reviews)}" class="row g-3">
-	              <div th:each="review : ${book.reviews}" class="col-12">
+	          <div th:if="${!#lists.isEmpty(reviews)}" class="row g-3">
+	              <div th:each="review : ${reviews}" class="col-12">
 	                  <div class="card shadow-sm">
 	                      <div class="card-body d-flex justify-content-between align-items-start">
 	                          <div class="me-3 w-100">

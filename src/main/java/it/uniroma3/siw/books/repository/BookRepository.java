@@ -1,13 +1,16 @@
 package it.uniroma3.siw.books.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import it.uniroma3.siw.books.model.Book;
 import it.uniroma3.siw.books.model.Genere;
@@ -28,6 +31,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	boolean existsByGenereIdAndTitleStartingWithIgnoreCase(Long genere, String title);
 	
-	
+	@EntityGraph(attributePaths = {"authors", "reviews", "images", "copertina", "genere"})
+	@Query("SELECT b FROM Book b WHERE b.id = :id")
+	Optional<Book> findByIdEager(@Param("id") Long id);
  
 }

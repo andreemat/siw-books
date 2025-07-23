@@ -1,11 +1,12 @@
 package it.uniroma3.siw.books.model;
 
 import java.time.Year;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.CascadeType;
@@ -28,193 +29,95 @@ import jakarta.validation.constraints.Size;
 @Entity
 public class Book {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
-	@NotBlank
-	private String title;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+    
+    @NotBlank
+    private String title;
+    
     @NotNull
     @Min(value = 1000)
     @Max(value = 2025)
-	private Integer publicationYear;
-    
+    private Integer publicationYear;
+
     @NotNull
     @ManyToOne
     private Genere genere;
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    
+    @OneToOne(cascade = CascadeType.ALL)
     private Image copertina;
+    
     @NotBlank
     @Pattern(regexp = "\\d{13}", message = "{isbn.invalid}")
     private String ISBN;
+    
     @Size(max = 1200)
     private String descrizione;
-    
-   @OneToMany(cascade = CascadeType.ALL)
-   private List<Image> images;
-   
-	@ManyToMany
-	private List<Author> authors;
 
+    // Changed from List to Set
+    @OneToMany(cascade = CascadeType.ALL)
+ 
+    private Set<Image> images = new HashSet<>();
 
-	@OneToMany(mappedBy="book", cascade = CascadeType.ALL)
-	private List<Review> reviews;
-    
-	/**
- * @return the images
- */
-public List<Image> getImages() {
-	return images;
-}
+    // Changed from List to Set  
+    @ManyToMany
 
-/**
- * @param images the images to set
- */
-public void setImages(List<Image> images) {
-	this.images = images;
-}
+    private Set<Author> authors = new HashSet<>();
 
+    @OneToMany(mappedBy="book", cascade = CascadeType.ALL)
+ 
+    private Set<Review> reviews = new HashSet<>();
 
+    // Constructors
+    public Book() {}
 
-	public Book() {
-		this.authors= new LinkedList<>();
-		this.images=new LinkedList<>();
-	}
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-	public Long getId() {
-		return id;
-	}
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getTitle() {
-		return title;
-	}
+    public Integer getPublicationYear() { return publicationYear; }
+    public void setPublicationYear(Integer publicationYear) { this.publicationYear = publicationYear; }
 
+    public Genere getGenere() { return genere; }
+    public void setGenere(Genere genere) { this.genere = genere; }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public Image getCopertina() { return copertina; }
+    public void setCopertina(Image copertina) { this.copertina = copertina; }
 
-	public Integer getPublicationYear() {
-		return publicationYear;
-	}
+    public String getISBN() { return ISBN; }
+    public void setISBN(String ISBN) { this.ISBN = ISBN; }
 
-	public void setPublicationYear(Integer publicationYear) {
-		this.publicationYear = publicationYear;
-	}
+    public String getDescrizione() { return descrizione; }
+    public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
 
-	/**
-	 * @return the descrizione
-	 */
-	public String getDescrizione() {
-		return descrizione;
-	}
+    public Set<Image> getImages() { return images; }
+    public void setImages(Set<Image> images) { this.images = images; }
 
-	/**
-	 * @param descrizione the descrizione to set
-	 */
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
-	}
+    public Set<Author> getAuthors() { return authors; }
+    public void setAuthors(Set<Author> authors) { this.authors = authors; }
 
-	public List<Author> getAuthors() {
-		return authors;
-	}
+    public Set<Review> getReviews() { return reviews; }
+    public void setReviews(Set<Review> reviews) { this.reviews = reviews; }
 
-	/**
-	 * @return the iSBN
-	 */
-	public String getISBN() {
-		return ISBN;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(id, book.id);
+    }
 
-	/**
-	 * @param iSBN the iSBN to set
-	 */
-	public void setISBN(String iSBN) {
-		ISBN = iSBN;
-	}
-
-	public void setAuthors(List<Author> authors) {
-		this.authors = authors;
-	}
-
-	/**
-	 * @return the copertina
-	 */
-	public Image getCopertina() {
-		return copertina;
-	}
-
-	/**
-	 * @param copertina the copertina to set
-	 */
-	public void setCopertina(Image copertina) {
-		this.copertina = copertina;
-	}
-
-	public List<Review> getReviews() {
-		return reviews;
-	}
-
-	public void setReviews(List<Review> reviews) {
-		this.reviews = reviews;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(authors, publicationYear);
-	}
-	public void removeAuthors() {
-	    for (Author author : this.authors) {
-	        author.getBooks().remove(this);
-	    }
-	    this.authors.clear();
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if ((obj == null) || (getClass() != obj.getClass())) {
-			return false;
-		}
-		Book other = (Book) obj;
-		return Objects.equals(authors, other.authors) && publicationYear == other.publicationYear;
-	}
-
-	public void addAuthor(Author author) {
-		 if (!this.authors.contains(author)) {
-		        this.authors.add(author);
-		    }
-		    if (!author.getBooks().contains(this)) {
-		        author.getBooks().add(this);
-		    }
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
 	public void removeAuthor(Author author) {
 		this.authors.remove(author);
 		
 	}
-
-	/**
-	 * @return the genere
-	 */
-	public Genere getGenere() {
-		return genere;
-	}
-
-	/**
-	 * @param genere the genere to set
-	 */
-	public void setGenere(Genere genere) {
-		this.genere = genere;
-	}
-	
-	
-
-	
-
 }
-

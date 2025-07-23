@@ -108,4 +108,9 @@ public boolean existsByGenreIdAndTitle(Long idGenere, String title ) {
 	return this.bookRepository.existsByGenereIdAndTitleStartingWithIgnoreCase(idGenere,title);
 }
 
+public Book findByIdEager(Long id) {
+	
+	return this.bookRepository.findByIdEager(id).orElse(null);
+}
+
 }

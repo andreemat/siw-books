@@ -294,28 +294,27 @@ INSERT INTO book (id, title, publication_year, genere_id, descrizione, isbn) VAL
 
 
 
-INSERT INTO author_books (books_id, authors_id) VALUES (-1, -21);  -- Se una notte d'inverno un viaggiatore - Italo Calvino
-INSERT INTO author_books (books_id, authors_id) VALUES (-2, -7);   -- Norwegian Wood - Haruki Murakami
-INSERT INTO author_books (books_id, authors_id) VALUES (-3, -22);  -- Il racconto dell'ancella - Margaret Atwood
-INSERT INTO author_books (books_id, authors_id) VALUES (-4, -23);  -- 1984 - George Orwell
-INSERT INTO author_books (books_id, authors_id) VALUES (-5, -24);  -- Harry Potter e la pietra filosofale - J.K. Rowling
-INSERT INTO author_books (books_id, authors_id) VALUES (-6, -25);  -- Il crollo - Chinua Achebe
-INSERT INTO author_books (books_id, authors_id) VALUES (-7, -8);   -- Cent'anni di solitudine - Gabriel García Márquez
-INSERT INTO author_books (books_id, authors_id) VALUES (-8, -26);  -- Orgoglio e pregiudizio - Jane Austen
-INSERT INTO author_books (books_id, authors_id) VALUES (-9, -13);  -- Il processo - Franz Kafka
-INSERT INTO author_books (books_id, authors_id) VALUES (-10, -27); -- L'amica geniale - Elena Ferrante
-INSERT INTO author_books (books_id, authors_id) VALUES (-11, -28); -- It - Stephen King
-INSERT INTO author_books (books_id, authors_id) VALUES (-12, -29); -- Assassinio sull'Orient Express - Agatha Christie
-INSERT INTO author_books (books_id, authors_id) VALUES (-13, -30); -- Il nome della rosa - Umberto Eco
-INSERT INTO author_books (books_id, authors_id) VALUES (-14, -31); -- L'alchimista - Paulo Coelho
-INSERT INTO author_books (books_id, authors_id) VALUES (-15, -32); -- Il codice da Vinci - Dan Brown
-INSERT INTO author_books (books_id, authors_id) VALUES (-16, -16); -- La ragazza con l'orecchino di perla - Tracy Chevalier
-INSERT INTO author_books (books_id, authors_id) VALUES (-17, -17); -- Dune - Frank Herbert
-INSERT INTO author_books (books_id, authors_id) VALUES (-18, -18); -- Il Signore degli Anelli - La Compagnia dell'Anello - J.R.R. Tolkien
-INSERT INTO author_books (books_id, authors_id) VALUES (-19, -19); -- Cronache del ghiaccio e del fuoco - Il Trono di Spade - George R.R. Martin
-INSERT INTO author_books (books_id, authors_id) VALUES (-20, -20); -- Il piccolo principe - Antoine de Saint-Exupéry
+INSERT INTO book_authors (books_id, authors_id) VALUES (-1, -21);  -- Se una notte d'inverno un viaggiatore - Italo Calvino
+INSERT INTO book_authors (books_id, authors_id) VALUES (-2, -7);   -- Norwegian Wood - Haruki Murakami
+INSERT INTO book_authors (books_id, authors_id) VALUES (-3, -22);  -- Il racconto dell'ancella - Margaret Atwood
+INSERT INTO book_authors (books_id, authors_id) VALUES (-4, -23);  -- 1984 - George Orwell
+INSERT INTO book_authors (books_id, authors_id) VALUES (-5, -24);  -- Harry Potter e la pietra filosofale - J.K. Rowling
+INSERT INTO book_authors (books_id, authors_id) VALUES (-6, -25);  -- Il crollo - Chinua Achebe
+INSERT INTO book_authors (books_id, authors_id) VALUES (-7, -8);   -- Cent'anni di solitudine - Gabriel García Márquez
+INSERT INTO book_authors (books_id, authors_id) VALUES (-8, -26);  -- Orgoglio e pregiudizio - Jane Austen
+INSERT INTO book_authors (books_id, authors_id) VALUES (-9, -13);  -- Il processo - Franz Kafka
+INSERT INTO book_authors (books_id, authors_id) VALUES (-10, -27); -- L'amica geniale - Elena Ferrante
+INSERT INTO book_authors (books_id, authors_id) VALUES (-11, -28); -- It - Stephen King
+INSERT INTO book_authors (books_id, authors_id) VALUES (-12, -29); -- Assassinio sull'Orient Express - Agatha Christie
+INSERT INTO book_authors (books_id, authors_id) VALUES (-13, -30); -- Il nome della rosa - Umberto Eco
+INSERT INTO book_authors (books_id, authors_id) VALUES (-14, -31); -- L'alchimista - Paulo Coelho
+INSERT INTO book_authors (books_id, authors_id) VALUES (-15, -32); -- Il codice da Vinci - Dan Brown
+INSERT INTO book_authors (books_id, authors_id) VALUES (-16, -16); -- La ragazza con l'orecchino di perla - Tracy Chevalier
+INSERT INTO book_authors (books_id, authors_id) VALUES (-17, -17); -- Dune - Frank Herbert
+INSERT INTO book_authors (books_id, authors_id) VALUES (-18, -18); -- Il Signore degli Anelli - La Compagnia dell'Anello - J.R.R. Tolkien
+INSERT INTO book_authors (books_id, authors_id) VALUES (-19, -19); -- Cronache del ghiaccio e del fuoco - Il Trono di Spade - George R.R. Martin
+INSERT INTO book_authors (books_id, authors_id) VALUES (-20, -20); -- Il piccolo principe - Antoine de Saint-Exupéry
 
-    
 
 
 
