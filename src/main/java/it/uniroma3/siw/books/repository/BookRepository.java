@@ -31,8 +31,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	boolean existsByGenereIdAndTitleStartingWithIgnoreCase(Long genere, String title);
 	
-	@EntityGraph(attributePaths = {"authors", "reviews", "images", "copertina", "genere"})
-	@Query("SELECT b FROM Book b WHERE b.id = :id")
-	Optional<Book> findByIdEager(@Param("id") Long id);
+
  
 }
