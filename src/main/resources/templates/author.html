@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dettagli Autore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/style2.css}">
+
+</head>
+<body>
+	<div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+	    <div th:replace="fragments/headerAdmin :: header"></div>
+	</div>
+
+	<!-- Se NON è admin -->
+	<div th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">
+	    <div th:replace="fragments/header :: header"></div>
+	</div>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between mb-3">
+		        <a href="/authors" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Tutti gli autori</a>
+    </div>
+	<div class="row">
+	<div class="col-md-4">
+	           		<img th:src="${author.foto != null} ? 
+								    @{/images/{id}(id=${author.foto.id})} : 
+								    @{/imagesStatic/author-default-image.jpg}"
+								    class="img-fluid rounded shadow" alt="Copertina libro">
+	        </div>
+
+    <div class="col-md-8 card shadow book-details-card">
+        <div class="card-body">
+            <h2 class="card-title text-primary fw-semibold" th:text="${author.name + ' ' + author.surname}">Nome Cognome</h2>
+            <p><span class="fw-bold">Data di nascita:</span> <span th:text="${author.dateOfBirth}">01/01/1900</span></p>
+            <p th:if="${author.dateOfDeath} != null"><span class="fw-bold">Data di morte:</span> 
+                <span th:text="${author.dateOfDeath}">1/1/1970</span>
+            </p>
+            <p><span class="fw-bold">Nazionalità:</span> <span th:text="${author.nationality.name}">Italia</span></p>
+        </div>
+    </div>
+	</div>
+	<div class="container mt-5">
+	<h3 class="mb-4">Libri di questo Autore</h3>
+
+		    <div th:if="${not #lists.isEmpty(author.books)}" class="row row-cols-1 row-cols-md-2 g-4">
+		        <div class="col" th:each="book : ${author.books}">
+		            <div class="card h-100 shadow-sm">
+		                <div class="row g-0 h-100">
+
+		                    <!-- Copertina libro -->
+		                    <div class="col-md-4 d-flex align-items-center">
+		                        <a th:href="@{/books/{id}(id=${book.id})}" class="w-100">
+		                            <img 
+		                                 th:src=									"${book.copertina != null} ? 
+																								    @{/images/{id}(id=${book.copertina.id})} : 
+																								    @{/imagesStatic/default-cover.jpg}"
+		                                 class="img-fluid rounded-start w-100"
+		                                 alt="copertina libro"
+		                                 style="height: 200px; object-fit: contain;">
+		                        </a>
+							
+							
+								
+		                    </div>
+
+		                    <!-- Dettagli libro -->
+		                    <div class="col-md-8">
+		                        <div class="card-body d-flex flex-column justify-content-between h-100">
+		                            <div>
+		                                <h5 class="card-title" th:text="${book.title}">Titolo libro</h5>
+		                                <p class="card-subtitle text-muted mb-2" th:text="'Anno: ' + ${book.publicationYear}">Anno: 2000</p>
+										<a class="card-subtitle d-block" th:each="author : ${book.authors}"
+										th:href="@{/author/{id}(id=${author.id})}"
+										th:text="${author.name + ' ' + author.surname}">
+										Nome Cognome
+										</a>
+									</div>
+		                           
+		                        </div>
+		                    </div>
+
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+	</div>
+		    <!-- Messaggio se nessun libro -->
+		    <div th:if="${#lists.isEmpty(author.books)}" class="alert alert-info">
+		        Questo autore non ha ancora nessun libro registrato nel sistema.
+		    </div>
+
+	</div>
+
+
+</div>
+
+</body>
+</html>

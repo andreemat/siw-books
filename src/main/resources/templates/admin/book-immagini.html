@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestione Immagini Libro</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style2.css}">
+</head>
+<body>
+
+<div th:replace="fragments/headerAdmin :: header"></div>
+
+<div class="container mt-5">
+    <h4 class="display-4 fw-semibold text-center mb-4" th:text="'Gestione immagini per ' + ${book.title}">Gestione immagini</h4>
+
+    <!-- STEP 1: Copertina -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5><i class="bi bi-image-fill"></i> Copertina del Libro</h5>
+        </div>
+		<div class="row">	
+			<div th:if="${book.copertina}" class="col-md-3 mx-3">
+			               <p><strong>Copertina attuale:</strong></p>
+			               <img th:src="@{/images/{id}(id=${book.copertina.id})}" th:field="*{copertina}" class="img-thumbnail" style="max-height: 200px;">
+			               <p th:text="${book.copertina.nomeFile}" class="text-muted mt-2"></p>
+			           </div>
+			
+			
+			
+		<div class="col-md-8">
+			<div class=" card-body">
+		            <form th:action="@{/admin/books/{id}/copertina(id=${book.id})}" method="post" enctype="multipart/form-data" class="mb-3">
+		                <div class="mb-3">
+		                    <label for="copertina" class="form-label">Scegli l'immagine di copertina</label>
+		                    <input type="file" id="copertina" name="file" class="form-control" accept="image/*" required>
+		                </div>
+		                <button type="submit" class="btn btn-primary">
+		                    <i class="bi bi-upload"></i> Carica Copertina
+		                </button>
+		            </form>
+
+		           
+		        </div>
+			</div>
+
+		</div>
+        
+    </div>
+
+    <!-- STEP 2: Altre Immagini -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-secondary text-white">
+            <h5><i class="bi bi-images"></i> Immagini Aggiuntive</h5>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/admin/books/{id}/immagini(id=${book.id})}" method="post" enctype="multipart/form-data" class="mb-3">
+                <div class="mb-3">
+                    <label for="immagini" class="form-label">Seleziona immagini aggiuntive</label>
+                    <input type="file" id="immagini" name="files" class="form-control" accept="image/*" multiple required>
+                </div>
+                
+                <button type="submit" class="btn btn-secondary">
+                    <i class="bi bi-upload"></i> Carica Immagini
+                </button>
+            </form>
+
+            <!-- Immagini attuali -->
+            <div th:if="${!book.images.empty}" class="mt-4">
+                <h6 class="fw-bold">📋 Immagini Attuali</h6>
+                <div class="d-flex flex-wrap gap-3">
+                    <div th:each="image : ${book.images}" class="text-center">
+                        <img th:src="@{/images/{id}(id=${image.id})}" class="img-thumbnail" style="width: 120px; height: 120px; object-fit: cover;">
+                        <p class="text-muted small mt-1" th:text="${image.nomeFile}"></p>
+						<a th:href="@{'/admin/books/' + ${book.id} + '/images/' + ${image.id} + '/delete'}"
+						   class="btn btn-sm btn-outline-danger">
+						    <i class="bi bi-trash"></i> Elimina
+						</a>
+						
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pulsante torna -->
+    <div class="text-center mt-4">
+        <a th:href="@{/admin/books/{id}(id=${book.id})}" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left-circle"></i> Torna al Libro
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <meta charset="UTF-8">
+    <title>Generi</title>
+    
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" 
+          integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/style2.css"> 
+</head>
+
+<body>
+	<div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+	    <div th:replace="fragments/headerAdmin :: header"></div>
+	</div>
+
+	<!-- Se NON è admin -->
+	<div th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">
+	    <div th:replace="fragments/header :: header"></div>
+	</div>
+	<section class="hero-section text-white py-5">
+	  <div class="container">
+	    <div class="row justify-content-center text-center">
+	      <div class="col-lg-8">
+	        <h1 class="display-4 fw-bold mb-4">
+	          <i class="bi bi-book-half text-warning me-3"></i>
+	          Esplora i generi
+	        </h1>
+	      </div>
+	    </div>
+	  </div>
+	</section>
+
+    <div class="container mt-4">
+		<div th:if="${errorMessage}" class="alert alert-danger text-center">
+		        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+		        <span th:text="${errorMessage}">Errore</span>
+		    </div>
+		<!-- Form per aggiungere un nuovo genere -->
+		<div class="row justify-content-center mb-4">
+		    <div class="col-md-6">
+		        <form th:action="@{/admin/genres}"  th:object="${genere}" method="post">
+					<div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+							                      <i class="fas fa-exclamation-triangle me-2"></i>
+							                      <strong>Attenzione!</strong> Correggi i seguenti errori:
+							                      <ul class="mb-0 mt-2" th:each="err : ${#fields.globalErrors()}">
+							                          <li th:text="${err}">Errore</li>
+							                      </ul>
+							</div>
+		            <div class="input-group">
+		                <input type="text" th:field="*{nome}" class="form-control" placeholder="Nuovo genere" th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid'">
+		                <button type="submit" class="btn btn-primary">
+		                    <i class="bi bi-plus-circle"></i> Aggiungi
+		                </button>
+		            </div>
+					<div class="invalid-feedback" th:errors="*{nome}"></div>
+
+
+		        </form>
+		    </div>
+		</div>
+
+
+		<div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+		    <div th:each="genre : ${genres}" class="col">
+		        <div class="card h-100 shadow-sm genre-card d-flex flex-column justify-content-between">
+		            <a class="text-decoration-none flex-grow-1" th:href="@{/books(title=${param.title}, genre=${genre.id})}">
+		                <div class="card-body text-center py-4">
+		                    <div class="mb-3">
+		                        <i class="bi bi-bookmark-fill fs-1 text-warning"></i>
+		                    </div>
+		                    <h5 class="card-title text-primary fw-semibold mb-3" th:text="${genre.nome}">Nome Genere</h5>
+		                    <i class="bi bi-arrow-right text-muted"></i>
+		                </div>
+		            </a>
+		
+		            <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="card-footer bg-transparent border-top-0 text-end">
+		                <form th:action="@{/admin/genere/{id}/delete(id=${genre.id})}" method="post" th:object="${genre}">
+		                    <button type="submit" class="btn btn-sm btn-outline-danger">
+		                        <i class="bi bi-trash"></i> Elimina
+		                    </button>
+		                </form>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+    </div>
+</body>
+</html>
+

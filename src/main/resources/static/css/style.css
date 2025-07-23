@@ -1,0 +1,69 @@
+.genre-btn {
+  display: flex;               /* usa flex per centrare testo */
+  justify-content: center;
+  align-items: center;
+  width: 150px;                /* larghezza fissa */
+  height: 50px;                /* altezza fissa */
+  color: white !important;
+  background-color: #4a90e2;
+  border-radius: 12px;
+  text-decoration: none !important;
+  font-weight: 500;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  position: relative;
+  z-index: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;           /* evita selezione testo involontaria */
+}
+
+.genre-btn:hover {
+  background-color: #357ABD;
+  box-shadow: 0 0 15px rgba(53, 122, 189, 0.9);
+  color: white !important;
+  cursor: pointer;
+  transform: scale(1.1);
+  z-index: 10;
+}
+.author-card {
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  transition: box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.author-card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-decoration: none;
+}
+
+.author-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.author-nationality {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+
+
+/* /static/css/genres.css */
+.card:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.02);
+    transition: all 0.2s ease-in-out;
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+
+
+

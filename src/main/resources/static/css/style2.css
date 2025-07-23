@@ -1,0 +1,625 @@
+/* ==========================================
+   VARIABILI CSS - PALETTE CALDA
+   ========================================== */
+:root {
+  --bs-primary: #8B4513;      /* Marrone caldo */
+  --bs-secondary: #D2691E;    /* Arancione bruciato */
+  --bs-success: #228B22;      /* Verde foresta */
+  --bs-warning: #DAA520;      /* Oro */
+  --bs-danger: #B22222;       /* Rosso mattone */
+  --bs-info: #4682B4;         /* Blu acciaio */
+  --bs-light: #F5DEB3;        /* Wheat */
+  --bs-dark: #654321;         /* Marrone scuro */
+  
+  /* Override Bootstrap colors */
+  --bs-primary-rgb: 139, 69, 19;
+  --bs-secondary-rgb: 210, 105, 30;
+  --bs-success-rgb: 34, 139, 34;
+  --bs-warning-rgb: 218, 165, 32;
+  --bs-danger-rgb: 178, 34, 34;
+  --bs-info-rgb: 70, 130, 180;
+  --bs-light-rgb: 245, 222, 179;
+  --bs-dark-rgb: 101, 67, 33;
+}
+
+/* ==========================================
+   HERO SECTION
+   ========================================== */
+.hero-section {
+  background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-secondary) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.1;
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-section h1 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================
+   SEARCH COMPONENT
+   ========================================== */
+.input-group-lg .form-control {
+  border-radius: 0.5rem 0 0 0.5rem !important;
+}
+
+.input-group-lg .btn {
+  border-radius: 0 0.5rem 0.5rem 0 !important;
+}
+
+.input-group:focus-within {
+  transform: translateY(-2px);
+  transition: transform 0.3s ease;
+}
+
+/* ==========================================
+   BOOK CARDS
+   ========================================== */
+.book-card {
+  border: none;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2) !important;
+}
+
+.book-image {
+  transition: transform 0.5s ease;
+}
+
+.book-overlay {
+  background: rgba(139, 69, 19, 0.8);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.book-card:hover .book-overlay {
+  opacity: 1;
+}
+
+.book-card:hover .book-image {
+  transform: scale(1.05);
+}
+
+.book-card a {
+  color: inherit;
+}
+
+.book-card:hover a {
+  color: inherit;
+}
+
+/* ==========================================
+   GENRE CARDS
+   ========================================== */
+.genre-card {
+  border: none;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.genre-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--bs-primary), var(--bs-secondary));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.genre-card:hover::before {
+  transform: scaleX(1);
+}
+
+.genre-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(139, 69, 19, 0.15) !important;
+}
+
+.genre-card:hover .bi-bookmark-fill {
+  color: var(--bs-primary) !important;
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
+
+.genre-card:hover .bi-arrow-right {
+  color: var(--bs-primary) !important;
+  transform: translateX(5px);
+  transition: all 0.3s ease;
+}
+
+.genre-card a {
+  color: inherit;
+}
+
+.genre-card:hover a {
+  color: inherit;
+}
+
+/* ==========================================
+   AUTHOR CARDS
+   ========================================== */
+.author-card {
+  border: none;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.author-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(139, 69, 19, 0.15) !important;
+}
+
+.author-card:hover .bi-person-circle {
+  color: var(--bs-primary) !important;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.author-card:hover .bi-arrow-right {
+  color: var(--bs-primary) !important;
+  transform: translateX(5px);
+  transition: all 0.3s ease;
+}
+
+.author-card a {
+  color: inherit;
+}
+
+.author-card:hover a {
+  color: inherit;
+}
+
+/* ==========================================
+   SECTION STYLING
+   ========================================== */
+.display-5 {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================
+   BADGES PERSONALIZZATI
+   ========================================== */
+.badge {
+  font-size: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+}
+
+/* ==========================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================== */
+@media (max-width: 768px) {
+  .hero-section h1 {
+    font-size: 2.5rem;
+  }
+  
+  .display-5 {
+    font-size: 2rem;
+  }
+  
+  .book-image {
+    height: 200px !important;
+  }
+  
+  .author-card .card-body {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .author-card .me-3 {
+    margin-right: 0 !important;
+    margin-bottom: 1rem;
+  }
+  
+  .input-group-lg {
+    flex-direction: column;
+  }
+  
+  .input-group-lg .form-control,
+  .input-group-lg .btn {
+    border-radius: 0.5rem !important;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+  
+  .book-image {
+    height: 150px !important;
+  }
+  
+  .row-cols-2 {
+    --bs-columns: 1;
+  }
+}
+
+/* ==========================================
+   ANIMAZIONI
+   ========================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Staggered animation per le card */
+.col:nth-child(1) .card { animation-delay: 0.1s; }
+.col:nth-child(2) .card { animation-delay: 0.2s; }
+.col:nth-child(3) .card { animation-delay: 0.3s; }
+.col:nth-child(4) .card { animation-delay: 0.4s; }
+.col:nth-child(5) .card { animation-delay: 0.5s; }
+.col:nth-child(6) .card { animation-delay: 0.6s; }
+
+/* ==========================================
+   BOOTSTRAP OVERRIDES
+   ========================================== */
+.text-primary {
+  color: var(--bs-primary) !important;
+}
+
+.btn-outline-primary{
+	border-color: var(--bs-primary) !important;
+	color: var(--bs-primary) !important;
+	
+}
+.btn-outline-primary:hover{
+	outline-color: var(--bs-primary) !important;
+	background-color: var(--bs-primary) !important;
+	color:white !important;
+	
+}
+
+.text-secondary {
+  color: var(--bs-secondary) !important;
+}
+
+.bg-primary {
+  background-color: var(--bs-primary) !important;
+}
+
+.bg-secondary {
+  background-color: var(--bs-secondary) !important;
+}
+
+.btn-primary {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--bs-dark);
+  border-color: var(--bs-dark);
+}
+
+.btn-secondary {
+  background-color: var(--bs-secondary);
+  border-color: var(--bs-secondary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}
+
+.btn-warning {
+  background-color: var(--bs-warning);
+  border-color: var(--bs-warning);
+  color: white;
+}
+
+.btn-danger {
+  background-color: var(--bs-dark);
+  border-color: var(--bs-dark);
+  color: white;
+}
+
+
+.badge.bg-danger {
+  background-color: var(--bs-danger) !important;
+}
+
+.badge.bg-success {
+  background-color: var(--bs-success) !important;
+}
+
+.badge.bg-warning {
+  background-color: var(--bs-warning) !important;
+  color: white !important;
+}
+
+/* ==========================================
+   UTILITY CLASSES
+   ========================================== */
+.shadow-warm {
+  box-shadow: 0 0.5rem 1rem rgba(139, 69, 19, 0.15) !important;
+}
+
+.border-warm {
+  border-color: var(--bs-primary) !important;
+}
+
+.text-warm {
+  color: var(--bs-primary) !important;
+}
+
+
+.page-item .page-link{
+	color:var(--bs-primary) !important;
+
+
+}
+
+
+.page-item.active .page-link{
+	color: white!important;
+	background-color: var(--bs-primary) !important;
+	border-color: var(--bs-primary) !important;
+}
+
+
+.alert-info{
+	background-color: rgba(210, 105, 30, 0.5); 
+	color: white;
+	border-color:var(--bs-secondary);
+}
+
+.alert-info a{
+
+	color: var(--bs-dark);
+	
+}
+
+.alert-secondary {
+    background-color: rgba(210, 105, 30, 0.1); /* Arancione bruciato molto trasparente */
+    color: var(--bs-secondary); /* Testo arancione bruciato */
+    border-color: var(--bs-secondary); /* Bordo arancione bruciato */
+    border: 1px solid var(--bs-secondary);
+}
+
+.alert-secondary a {
+    color: var(--bs-dark); /* Link in marrone scuro per leggibilità */
+    font-weight: 600;
+}
+
+.alert-secondary a:hover {
+    color: var(--bs-primary); /* Al hover diventa marrone caldo */
+    text-decoration: underline;
+}
+
+.btn-outline-secondary {
+    border-color: var(--bs-secondary) !important;
+    color: var(--bs-secondary) !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--bs-secondary) !important;
+    border-color: var(--bs-secondary) !important;
+    color: white !important;
+}
+
+.btn-outline-dark   { 
+	border-color: var(--bs-dark) !important;
+    color: var(--bs-dark) !important;
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--bs-dark) !important;
+    border-color: var(--bs-dark) !important;
+    color: white !important;
+}
+
+/* Override colori Bootstrap per la palette calda */
+.text-danger {
+    color: var(--bs-danger) !important;
+}
+
+.btn-success {
+    background-color: var(--bs-success);
+    border-color: var(--bs-success);
+}
+
+.btn-success:hover {
+    background-color: #1F7A1F; /* Verde più scuro */
+    border-color: #1F7A1F;
+}
+
+.text-success {
+    color: var(--bs-success) !important;
+}
+
+/* ==========================================
+   FORM CARD (LOGIN & REGISTRATION)
+   ========================================== */
+.form-card {
+    background: white; /* Sfondo bianco */
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--bs-primary);
+    border-radius: 1.5rem;
+    padding: 3rem;
+    box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
+    width: 400px;
+    max-width: 90vw;
+    transition: all 0.3s ease;
+}
+
+.form-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(139, 69, 19, 0.25);
+}
+
+.form-card .form-floating {
+    position: relative;
+}
+
+.form-card .form-control {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(139, 69, 19, 0.3);
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.form-card .form-control:focus {
+    background-color: white;
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(139, 69, 19, 0.15);
+}
+
+.form-card .form-floating label {
+    color: var(--bs-dark);
+    font-weight: 500;
+}
+
+.form-card .form-control:focus ~ label,
+.form-card .form-control:not(:placeholder-shown) ~ label {
+    color: var(--bs-primary);
+}
+
+.form-card .btn-primary {
+    border-radius: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+}
+
+.form-card .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+}
+
+.form-card .btn-success {
+	background-color: #8B4513;
+	border-color: unset;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(34, 139, 34, 0.3);
+}
+
+.form-card .btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(128, 0, 0,0.2);
+}
+
+.form-card h1 {
+    color: var(--bs-primary);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.form-card .bi-person-circle,
+.form-card .bi-person-plus-fill {
+    text-shadow: 2px 2px 4px rgba(139, 69, 19, 0.3);
+    transition: all 0.3s ease;
+	color: #8B4513;
+}
+
+
+
+
+.form-card:hover .bi-person-circle {
+    transform: scale(1.05);
+    color: var(--bs-secondary) !important;
+}
+
+.form-card:hover .bi-person-plus-fill {
+    transform: scale(1.05);
+   
+}
+
+/* Responsive per form */
+@media (max-width: 480px) {
+    .form-card {
+        padding: 2rem;
+        width: 350px;
+    }
+}
+
+/* ==========================================
+   BOOK DETAILS CARDS
+   ========================================== */
+   .book-details-card {
+	border: 2px solid var(--bs-primary);
+	border-radius: 1rem;
+	padding: 1.5rem;
+	background-color: #fff; /* sfondo chiaro */
+	transition: all 0.3s ease;
+   }
+
+.book-details-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2) !important;
+}
+
+.book-description {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+
+
+
+
+.star-rating {
+    direction: rtl; /* inverte l'ordine per far funzionare hover da destra a sinistra */
+    font-size: 2rem;
+    unicode-bidi: bidi-override;
+    display: inline-flex;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* Hover effetto */
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: gold;
+}
+
+/* Selezionato */
+.star-rating input:checked ~ label {
+    color: gold;
+}

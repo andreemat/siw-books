@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestione Libri</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/style2.css}">
+</head>
+<body>
+
+<div th:replace="fragments/headerAdmin :: header"></div>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Gestione Libri</h1>
+        <a th:href="@{/admin/books/new}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Nuovo Libro
+        </a>
+    </div>
+
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <!-- Form di ricerca -->
+    <form th:action="@{/admin/books}" method="get" class="row g-2 mb-4">
+        <div class="col-md-6">
+            <input type="text" name="filtroCercaLibro" placeholder="Cerca un libro" class="form-control" />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-secondary">
+                <i class="bi bi-search"></i> Cerca
+            </button>
+        </div>
+    </form>
+
+    <!-- Tabella libri -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Titolo</th>
+                    <th>Autori</th>
+                    <th>Anno</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${#lists.isEmpty(books)}">
+                    <td colspan="4" class="text-center">Nessun libro trovato.</td>
+                </tr>
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.title}">Titolo del Libro</td>
+                    <td>
+                        <span th:each="author, iterStat : ${book.authors}">
+                            <span th:text="${author.name + ' ' + author.surname}">Nome Autore</span>
+                            <span th:if="${!iterStat.last}">, </span>
+                        </span>
+                    </td>
+                    <td th:text="${book.publicationYear}">1984</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a th:href="@{/admin/books/{id}(id=${book.id})}" class="btn btn-sm btn-warning">
+                                <i class="bi bi-pencil-square"></i> Modifica
+                            </a>
+                            <form th:action="@{/admin/books/{id}/delete(id=${book.id})}" method="post"
+                                  onsubmit="return confirm('Sei sicuro di voler eliminare questo libro?');">
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i> Elimina
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

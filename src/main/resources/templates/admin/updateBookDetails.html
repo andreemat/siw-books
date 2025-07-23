@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifica Libro</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+	<link rel="stylesheet" th:href="@{/css/style2.css}">
+
+</head>
+<body>
+
+<div th:replace="fragments/headerAdmin :: header"></div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header text-center bg-primary text-white">
+                    <h4><i class="bi bi-book"></i> Modifica Libro</h4>
+                </div>
+                <div class="card-body">
+					<form th:action="@{/admin/books/{idB}/edit(idB=${book.id})}" th:object="${book}" method="post">
+					    <input type="hidden" th:field="*{id}" />
+
+					    <div class="mb-3">
+					        <label for="title" class="form-label">Titolo</label>
+					        <input type="text" id="title" th:field="*{title}" class="form-control"
+					               th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'" />
+					        <div class="invalid-feedback" th:errors="*{title}"></div>
+					    </div>
+
+					    <div class="mb-3">
+					        <label for="publicationYear" class="form-label">Anno di Pubblicazione</label>
+					        <input type="number" id="publicationYear" th:field="*{publicationYear}" class="form-control"
+					               th:classappend="${#fields.hasErrors('publicationYear')} ? 'is-invalid'" />
+					        <div class="invalid-feedback" th:errors="*{publicationYear}"></div>
+					    </div>
+
+					    <div class="mb-3">
+					        <label for="descrizione" class="form-label">Descrizione</label>
+					        <input type="text" id="descrizione" th:field="*{descrizione}" class="form-control"
+					               th:classappend="${#fields.hasErrors('descrizione')} ? 'is-invalid'" />
+					        <div class="invalid-feedback" th:errors="*{descrizione}"></div>
+					    </div>
+
+					    <div class="mb-3">
+					        <label for="isbn" class="form-label">ISBN</label>
+					        <input type="text" id="isbn" th:field="*{ISBN}" class="form-control"
+					               th:classappend="${#fields.hasErrors('ISBN')} ? 'is-invalid'" />
+					        <div class="invalid-feedback" th:errors="*{ISBN}"></div>
+					    </div>
+
+					    <div class="mb-3">
+					        <label for="genere" class="form-label">Genere</label>
+					        <select id="genere" name="genereSelezionato" th:field="*{genere}" class="form-select"
+					                th:classappend="${#fields.hasErrors('genere')} ? 'is-invalid'">
+					            <option value="" disabled selected>-- Scegli un genere --</option>
+					            <option th:each="g : ${genres}" th:value="${g.id}" th:text="${g.nome}"></option>
+					        </select>
+					        <div class="invalid-feedback" th:errors="*{genere}"></div>
+					    </div>
+
+					    <div class="d-flex justify-content-between">
+					        <button type="submit" class="btn btn-primary">Salva Modifiche</button>
+					        <a th:href="@{/admin/books/{id}(id=${book.id})}" class="btn btn-outline-secondary">
+					            Torna al libro
+					        </a>
+					    </div>
+					</form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

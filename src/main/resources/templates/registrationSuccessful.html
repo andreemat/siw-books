@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Il tuo profilo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style2.css}">
+</head>
+<body>
+
+    <!-- Header dinamico -->
+    <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <div th:replace="fragments/headerAdmin :: header"></div>
+    </div>
+    <div th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <div th:replace="fragments/header :: header"></div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between mb-3">
+            <a href="/" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Torna alla home</a>
+        </div>
+
+        <div class="card shadow book-details-card text-center p-4">
+            <div class="card-body">
+                <i class="bi bi-person-circle" style="font-size: 5rem; color: #0d6efd;"></i>
+                <h2 class="card-title text-primary fw-semibold mt-3" th:text="${user.name + ' ' + user.surname}">Nome Cognome</h2>
+                <p><span class="fw-bold">Nome:</span> <span th:text="${user.name}">Mario</span></p>
+                <p><span class="fw-bold">Cognome:</span> <span th:text="${user.surname}">Rossi</span></p>
+                <p><span class="fw-bold">Email:</span> <span th:text="${user.email}">mario.rossi@example.com</span></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

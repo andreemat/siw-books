@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Authors</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style2.css}">
+
+    <style>
+        .author-card {
+            max-width: 280px;
+            margin: auto;
+        }
+
+        .author-img-container {
+            height: 180px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .author-img-container img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .author-icon {
+            font-size: 4rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header diverso per ADMIN / non-ADMIN -->
+<div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+    <div th:replace="fragments/headerAdmin :: header"></div>
+</div>
+<div th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">
+    <div th:replace="fragments/header :: header"></div>
+</div>
+
+<section class="hero-section text-white py-5">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold">
+            <i class="bi bi-book-half text-warning me-3"></i>
+            Tutti gli autori
+        </h1>
+    </div>
+</section>
+
+
+<form th:action="@{/authors}" method="get" class="d-flex justify-content-center gap-2 mb-4 mt-4">
+    <!-- Campo ricerca titolo -->
+    <div class="col-md-4">
+        <input type="text" name="autore" th:value="${title}" class="form-control" placeholder="Cerca per cognome o nome">
+    </div>
+
+
+    <!-- Pulsante submit -->
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Filtra</button>
+    </div>
+</form>
+
+<div class="container mt-4">
+    <div class="row justify-content-center g-4">
+        <div th:each="author : ${authorPage.content}" class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm text-center author-card">
+
+                
+                <a th:href="@{/author/{id}(id=${author.id})}">
+					<div class="author-img-container">
+						<img th:src="${author.foto != null and author.foto.id != null} ?
+						                  @{/images/{id}(id=${author.foto.id})} :
+						                  @{/imagesStatic/author-default-image.jpg}"
+						          alt="Foto autore" class="author-img"/>
+					   </div>
+                </a>
+
+          
+                <div class="card-body py-3 px-2">
+                    <a th:href="@{/author/{id}(id=${author.id})}" class="text-decoration-none text-dark">
+                        <h6 class="card-title fw-semibold mb-1" 
+                            th:text="${author.name + ' ' + author.surname}">Nome Cognome</h6>
+                        <i class="bi bi-arrow-right text-muted fs-6"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center mt-4" th:if="${authorPage.totalPages > 1}">
+	    <nav>
+	        <ul class="pagination">
+	            <!-- Bottone "indietro" -->
+	            <li class="page-item" th:classappend="${authorPage.first} ? 'disabled'">
+	                <a class="page-link" th:href="@{/author(title=${param.autore},page=${authorPage.number - 1}, size=${authorPage.size})}">«</a>
+	            </li>
+
+	            <!-- Numeri di pagina -->
+	            <li class="page-item"
+	                th:each="i : ${#numbers.sequence(0, authorPage.totalPages - 1)}"
+	                th:classappend="${i == authorPage.number} ? 'active'">
+	                <a class="page-link" th:href="@{/authors(autore=${param.title},page=${i}, size=${authorPage.size})}"
+	                   th:text="${i + 1}">1</a>
+	            </li>
+
+	            <!-- Bottone "avanti" -->
+	            <li class="page-item" th:classappend="${authorPage.last} ? 'disabled'">
+	                <a class="page-link" th:href="@{/authors(title=${param.title},page=${authorPage.number + 1}, size=${authorPage.size})}">»</a>
+	            </li>
+	        </ul>
+	    </nav>
+	</div>
+
+</body>
+</html>

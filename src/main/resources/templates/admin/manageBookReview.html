@@ -1,0 +1,92 @@
+      
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Gestione Recensioni per: ' + ${book.title}"></title>
+    <!-- Stili opzionali per una migliore leggibilità -->
+    <style>
+        body { font-family: sans-serif; margin: 2em; color: #333; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1, h2 { color: #005a9c; }
+        nav { margin-bottom: 20px; }
+        .book-info { background-color: #f4f4f4; border: 1px solid #ddd; padding: 15px; border-radius: 5px; margin-bottom: 2em; }
+        .review-list { list-style-type: none; padding: 0; }
+        .review-item { border: 1px solid #ccc; border-radius: 5px; padding: 15px; margin-bottom: 1em; }
+        .review-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; }
+        .review-user { font-weight: bold; }
+        .review-actions form { display: inline; }
+        .delete-btn { background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
+        .review-body p { margin: 5px 0; }
+    </style>
+</head>
+<body>
+	<div th:replace="fragments/headerAdmin :: header"></div>
+
+    <div class="container">
+        <nav>
+            <!-- Link per tornare alla lista dei libri dell'admin -->
+            <a th:href="@{/admin/books}">Torna alla Lista Libri</a>
+        </nav>
+
+        <h1 th:text="'Gestione Recensioni per: ' + ${book.title}">Gestione Recensioni</h1>
+        
+        <div class="book-info">
+            <p>Stai gestendo le recensioni per il libro "<strong th:text="${book.title}"></strong>".</p>
+        </div>
+
+        <!-- Lista delle recensioni -->
+        <div class="reviews-section">
+            <h2>Recensioni Pubblicate</h2>
+
+            <!-- Messaggio mostrato se non ci sono recensioni per questo libro -->
+            <div th:if="${#lists.isEmpty(reviews)}">
+                <p>Non ci sono recensioni per questo libro.</p>
+            </div>
+
+            <!-- Lista non ordinata che cicla su ogni recensione -->
+            <ul class="review-list" th:unless="${#lists.isEmpty(book.reviews)}">
+                <li class="review-item" th:each="review : ${book.reviews}">
+                    
+                    <div class="review-header">
+                        <!-- Mostra lo username dell'utente che ha scritto la recensione -->
+                        <span class="review-user" th:text="${review.user.credential.username}">Username Utente</span>
+                        
+                        <!-- Azioni per l'admin (pulsante Elimina) -->
+                        <div class="review-actions">
+                            <!-- 
+                              Usiamo un form per l'eliminazione per sicurezza (usa il metodo POST).
+                              L'URL punta a un endpoint specifico per cancellare la recensione.
+                            -->
+                            <form th:action="@{/admin/books/{idB}/reviews/{idR}/delete(idB=${book.id},idR=${review.id})}" method="post" 
+                                  onsubmit="return confirm('Sei sicuro di voler eliminare questa recensione?');">
+                                
+                                <!-- 
+                                  Parametro nascosto per sapere a quale pagina libro tornare dopo la cancellazione.
+                                  Questo rende il flusso più user-friendly.
+                                -->
+                                <input type="hidden" name="returnTo" th:value="'/admin/books/' + ${book.id} + '/manage-reviews'" />
+                                
+                                <button type="submit" class="delete-btn">Elimina Recensione</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="review-body">
+                        <p><strong>Voto:</strong> <span th:text="${review.vote}"></span> / 5</p>
+                        <p><strong>Titolo:</strong> <span th:text="${review.title}"></span></p>
+                        <p><strong>Testo:</strong></p>
+                        <blockquote th:text="${review.text}">
+                            Testo della recensione...
+                        </blockquote>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
+
+    
