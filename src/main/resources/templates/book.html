@@ -148,7 +148,7 @@
     <!-- Lista recensioni -->
 	<h4 class="mt-4">Recensioni</h4>
 
-	          <div th:if="${#lists.isEmpty(reviews)}" class="alert alert-secondary">
+<div th:if="${#lists.isEmpty(reviews) and userReview == null}" class="alert alert-secondary">
 	              Nessuna recensione disponibile.
 	          </div>
 	          

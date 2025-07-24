@@ -56,7 +56,7 @@ public class ReviewController {
 		        return "book"; 
 		    }
 
-		    this.reviewService.createNewReview(review);
+		    this.reviewService.createNewReview(review, user, book);
 		return "redirect:/books/{idB}";
 	}
 	
