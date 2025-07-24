@@ -72,11 +72,10 @@
                     <!-- Copertina libro -->
                     <div class="col-md-4 d-flex align-items-center">
                         <a th:href="@{/admin/books/{id}(id=${book.id})}" class="w-100">
-                            <img th:if="${book.copertina != null}"
-                                 th:src="@{/images/{id}(id=${book.copertina.id})}"
-                                 class="img-fluid rounded-start w-100"
-                                 alt="copertina libro"
-                                 style="height: 200px; object-fit: contain;">
+     <img th:src="${book.copertina != null} ? 
+										    @{/images/{id}(id=${book.copertina.id})} : 
+										    @{/imagesStatic/default-cover.jpg}"
+										     style="height: 200px; object-fit: contain;" alt="Copertina libro">
                         </a>
                     </div>
 
