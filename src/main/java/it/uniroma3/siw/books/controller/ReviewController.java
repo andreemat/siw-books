@@ -44,17 +44,19 @@ public class ReviewController {
 		    review.setUser(user);
 		    review.setBook(book);
 		    review.setDate(LocalDate.now());
-
+		    
+			book.getReviews().add(review);
+		    
 		    this.reviewValidator.validate(review, bindingResult);
 
 		    if (bindingResult.hasErrors()) {
 		        model.addAttribute("book", book);
 		        model.addAttribute("reviews",book.getReviews());
 		     
-		        return "book"; // il nome del template senza .html
+		        return "book"; 
 		    }
 
-		    this.reviewService.createNewReview(review, user, book);
+		    this.reviewService.createNewReview(review);
 		return "redirect:/books/{idB}";
 	}
 	

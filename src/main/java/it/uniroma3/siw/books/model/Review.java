@@ -58,6 +58,8 @@ public class Review {
 	}
 
 	public void setUser(User user) {
+	    user.getReviews().add(this);
+
 		this.user = user;
 	}
 
@@ -67,6 +69,8 @@ public class Review {
 
 	public void setBook(Book book) {
 		this.book = book;
+		book.getReviews().add(this);
+
 	}
 
 	public Long getId() {

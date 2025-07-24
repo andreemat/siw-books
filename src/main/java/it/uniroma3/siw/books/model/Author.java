@@ -127,12 +127,7 @@ public class Author {
 	    }
 	}
 
-	
 
-	public void removeBook(Book book) {
-		this.books.remove(book);
-		
-	}
 
 	@Override
 	public int hashCode() {

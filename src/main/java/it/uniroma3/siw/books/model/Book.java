@@ -171,7 +171,9 @@ public class Book {
     }
 
 	public void removeAuthor(Author author) {
-		this.authors.remove(author);
+	    if (this.authors.remove(author)) {
+	        author.getBooks().remove(this);
+	    }
 		
 	}
 }

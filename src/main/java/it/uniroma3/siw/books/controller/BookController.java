@@ -202,7 +202,7 @@ public class BookController {
 	                           @RequestParam(name = "filterSearchAuthor", required = false) String filterSearchAuthor) {
 
 		Book book = this.bookService.findById(id);
-		List<Author> bookAuthors = new ArrayList<>(book.getAuthors()); // copia sicura
+		List<Author> bookAuthors = new ArrayList<>(book.getAuthors()); 
 
 		List<Author> allAuthors;
 
@@ -212,7 +212,7 @@ public class BookController {
 		    allAuthors = new ArrayList<>(this.authorService.findAll());
 		}
 
-		allAuthors.removeAll(bookAuthors); // ora è sicuro
+		allAuthors.removeAll(bookAuthors); 
 
 		model.addAttribute("book", book);
 		model.addAttribute("bookAuthors", bookAuthors);
@@ -289,7 +289,7 @@ public class BookController {
 		Author author = this.authorService.findByid(idA);
 		Book book = (Book) this.bookService.findById(idB);
         if (author != null && book != null) {
-        	author.removeBook(book);
+        
         	book.removeAuthor(author);
         	bookService.save(book);    
         	authorService.save(author); 
