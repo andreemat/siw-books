@@ -150,7 +150,6 @@ public class BookController {
 	                          @RequestParam("copertinaFile") MultipartFile copertinaFile,
 	                          Model model) throws IOException {
 		
-	    // Esegui solo se non ci sono errori da annotazioni come @NotNull
 	    if (!bindingResult.hasErrors()) {
 	        this.bookValidator.validate(book, bindingResult);
 	    }
@@ -161,7 +160,6 @@ public class BookController {
 	        return "admin/FormNewBook.html";
 	    }
 
-	    // Gestione autori e copertina
 	    if (authorIds != null && !authorIds.isEmpty()) {
 	        List<Author> selectedAuthors = this.authorService.findAllById(authorIds);
 	        book.setAuthors(selectedAuthors); 
