@@ -27,7 +27,7 @@
 
 		        
 		        <div class="col-md-4 d-flex align-items-center">
-					<img th:src="${author.foto != null and author.foto.id != null} ?
+					<img th:src="${author.foto != null} ?
 											                  @{/images/{id}(id=${author.foto.id})} :
 											                  @{/imagesStatic/author-default-image.jpg}"
 											          alt="Foto autore" class="img-fluid rounded-start w-100"/>

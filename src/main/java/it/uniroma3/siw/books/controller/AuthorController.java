@@ -83,10 +83,10 @@ public class AuthorController {
 	}
 	
 	@PostMapping("/admin/authors/save")
-	public String newAuthor(@Valid @ModelAttribute("author") Author author,@Valid @RequestParam("image") MultipartFile image,BindingResult bindingResult,Model model) throws IOException {
+	public String newAuthor(@Valid @ModelAttribute("author") Author author, BindingResult bindingResult,@RequestParam("image") MultipartFile image,Model model) throws IOException {
 		this.authorValidator.validate(author,bindingResult);
 		if(!bindingResult.hasErrors()) {
-			if(image!=null) {
+			if(image != null && !image.isEmpty()) {
 				Image image2=new Image();
 				image2.setDati(image.getBytes());
 				image2.setNomeFile(image.getOriginalFilename());
