@@ -72,9 +72,8 @@ public class BookController {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Book> bookPage;
-
         if (title != null && !title.isBlank() && genre != null) {
- 
+        	
             bookPage = bookService.findByGenreIdAndTitle(genre, title, pageable);
         } else if (title != null && !title.isBlank()) {
 
@@ -111,11 +110,12 @@ public class BookController {
 
 
 		Book book =this.bookService.findById(id);
-		List<Review> reviews=book.getReviews();
+		List<Review> reviews = new ArrayList<>(book.getReviews());
 		if (userDetails != null) {
 	        User user = credentialService.getCredential(userDetails.getUsername()).getUser();
 			Review userReview=this.reviewService.findByUserAndBook(user, book);
 			if (userReview != null) {
+				
 			    reviews.remove(userReview);
 			    model.addAttribute("userReview", userReview);
 			}
@@ -201,21 +201,22 @@ public class BookController {
 	                           @PathVariable("id") Long id, 
 	                           @RequestParam(name = "filterSearchAuthor", required = false) String filterSearchAuthor) {
 
-	    Book book = this.bookService.findById(id);
-	    List<Author> bookAuthors = book.getAuthors();
+		Book book = this.bookService.findById(id);
+		List<Author> bookAuthors = new ArrayList<>(book.getAuthors()); // copia sicura
 
-	    List<Author> allAuthors;
+		List<Author> allAuthors;
 
-	    if (filterSearchAuthor != null && !filterSearchAuthor.isBlank()) {
-	        allAuthors = this.authorService.searchAuthorBySurname(filterSearchAuthor);
-	    } else {
-	        allAuthors = this.authorService.findAll();
-	    }
-	    allAuthors.removeAll(bookAuthors);
+		if (filterSearchAuthor != null && !filterSearchAuthor.isBlank()) {
+		    allAuthors = new ArrayList<>(this.authorService.searchAuthorBySurname(filterSearchAuthor));
+		} else {
+		    allAuthors = new ArrayList<>(this.authorService.findAll());
+		}
 
-	    model.addAttribute("book", book);
-	    model.addAttribute("bookAuthors", bookAuthors);
-	    model.addAttribute("otherAuthors", allAuthors);
+		allAuthors.removeAll(bookAuthors); // ora è sicuro
+
+		model.addAttribute("book", book);
+		model.addAttribute("bookAuthors", bookAuthors);
+		model.addAttribute("otherAuthors", allAuthors);
 
 	    return "admin/updateBooksAuthor.html";
 	}
@@ -301,7 +302,6 @@ public class BookController {
 		Book book = (Book) this.bookService.findById(idB);
         if (author != null  && book != null) {
         	author.addBooks(book);   
-            book.getAuthors().add(author);
         	bookService.save(book);    
         	authorService.save(author); 
 	}
@@ -361,7 +361,6 @@ public class BookController {
 	             book.setCopertina(img);
 	             bookService.save(book);
 
-	             // Elimina la vecchia copertina solo dopo aver salvato la nuova
 	             if (oldCopertina != null && !oldCopertina.getId().equals(img.getId())) {
 	                 imageService.deleteImage(oldCopertina.getId());
 	             }

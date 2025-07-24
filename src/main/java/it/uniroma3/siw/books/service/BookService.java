@@ -115,9 +115,10 @@ public List<Book> cercaLibroContenente(String filtroCercaLibro) {
 }
 
 public Book findByGenreIdAndTitle(Long id, String title) {
-	
 	return this.bookRepository.findByGenereIdAndTitle(id,title);
 }
+
+
 
 
 

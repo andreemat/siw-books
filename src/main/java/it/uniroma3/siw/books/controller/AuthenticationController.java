@@ -104,12 +104,5 @@ public class AuthenticationController {
 		return "admin/dashboardAdmin.html";
 	}
 	
-	@GetMapping("/profile")
-	public String profile(Model model) {
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		User user = credentialService.getCredential(userDetails.getUsername()).getUser();
-		 model.addAttribute("user",user);
-		return "registrationSuccessful";
-	}
+	
 }

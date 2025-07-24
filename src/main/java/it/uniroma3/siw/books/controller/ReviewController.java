@@ -67,7 +67,7 @@ public class ReviewController {
 	
 	
 	@PostMapping("/admin/books/{idB}/reviews/{idR}/delete")
-	public String removeReview(Model model, @PathVariable("idB") Long idB,@PathVariable("idR") Long idR,@AuthenticationPrincipal UserDetails userDetails) {
+	public String removeReview(Model model, @PathVariable("idB") Long idB,@PathVariable("idR") Long idR,@AuthenticationPrincipal UserDetails userDetails) {	
 		this.reviewService.deleteReviewById(idR);
 		model.addAttribute("book",this.bookService.findById(idB));
 		return "redirect:/admin/books/{idB}";

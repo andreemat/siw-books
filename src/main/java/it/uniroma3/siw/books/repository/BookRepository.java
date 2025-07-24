@@ -37,6 +37,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	Book findByGenereIdAndTitle(Long id, String title);
 	
-
+	
  
 }

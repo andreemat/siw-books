@@ -57,12 +57,12 @@ public class Book {
     @Size(max = 1200)
     private String descrizione;
 
-    // Changed from List to Set
+
     @OneToMany(cascade = CascadeType.ALL)
  
     private List<Image> images = new LinkedList<>();
 
-    // Changed from List to Set  
+  
     @ManyToMany
 
     private List<Author> authors = new LinkedList<>();
