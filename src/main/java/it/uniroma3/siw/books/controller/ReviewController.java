@@ -49,6 +49,7 @@ public class ReviewController {
 
 		    if (bindingResult.hasErrors()) {
 		        model.addAttribute("book", book);
+		        model.addAttribute("reviews",book.getReviews());
 		     
 		        return "book"; // il nome del template senza .html
 		    }
