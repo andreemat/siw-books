@@ -45,7 +45,7 @@ public class ReviewController {
 		    review.setBook(book);
 		    review.setDate(LocalDate.now());
 		    
-			book.getReviews().add(review);
+			
 		    
 		    this.reviewValidator.validate(review, bindingResult);
 
