@@ -30,6 +30,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	Page<Book> findByGenereIdAndTitleStartingWithIgnoreCase(Long genre, String title, Pageable pageable);
 
 	boolean existsByGenereIdAndTitleStartingWithIgnoreCase(Long genere, String title);
+
+	List<Book> findByTitleContainingIgnoreCase(String filtroCercaLibro);
 	
 
  

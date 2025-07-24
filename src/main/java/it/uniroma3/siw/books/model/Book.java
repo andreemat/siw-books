@@ -2,6 +2,8 @@ package it.uniroma3.siw.books.model;
 
 import java.time.Year;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -58,52 +60,104 @@ public class Book {
     // Changed from List to Set
     @OneToMany(cascade = CascadeType.ALL)
  
-    private Set<Image> images = new HashSet<>();
+    private List<Image> images = new LinkedList<>();
 
     // Changed from List to Set  
     @ManyToMany
 
-    private Set<Author> authors = new HashSet<>();
+    private List<Author> authors = new LinkedList<>();
 
     @OneToMany(mappedBy="book", cascade = CascadeType.ALL)
  
-    private Set<Review> reviews = new HashSet<>();
+    private List<Review> reviews = new LinkedList<>();
 
     // Constructors
     public Book() {}
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public Long getId() {
+		return id;
+	}
 
-    public Integer getPublicationYear() { return publicationYear; }
-    public void setPublicationYear(Integer publicationYear) { this.publicationYear = publicationYear; }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Genere getGenere() { return genere; }
-    public void setGenere(Genere genere) { this.genere = genere; }
+	public String getTitle() {
+		return title;
+	}
 
-    public Image getCopertina() { return copertina; }
-    public void setCopertina(Image copertina) { this.copertina = copertina; }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getISBN() { return ISBN; }
-    public void setISBN(String ISBN) { this.ISBN = ISBN; }
+	public Integer getPublicationYear() {
+		return publicationYear;
+	}
 
-    public String getDescrizione() { return descrizione; }
-    public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
+	public void setPublicationYear(Integer publicationYear) {
+		this.publicationYear = publicationYear;
+	}
 
-    public Set<Image> getImages() { return images; }
-    public void setImages(Set<Image> images) { this.images = images; }
+	public Genere getGenere() {
+		return genere;
+	}
 
-    public Set<Author> getAuthors() { return authors; }
-    public void setAuthors(Set<Author> authors) { this.authors = authors; }
+	public void setGenere(Genere genere) {
+		this.genere = genere;
+	}
 
-    public Set<Review> getReviews() { return reviews; }
-    public void setReviews(Set<Review> reviews) { this.reviews = reviews; }
+	public Image getCopertina() {
+		return copertina;
+	}
 
-    @Override
+	public void setCopertina(Image copertina) {
+		this.copertina = copertina;
+	}
+
+	public String getISBN() {
+		return ISBN;
+	}
+
+	public void setISBN(String iSBN) {
+		ISBN = iSBN;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+
+	public List<Author> getAuthors() {
+		return authors;
+	}
+
+	public void setAuthors(List<Author> authors) {
+		this.authors = authors;
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

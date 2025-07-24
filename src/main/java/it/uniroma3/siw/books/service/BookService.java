@@ -108,6 +108,11 @@ public boolean existsByGenreIdAndTitle(Long idGenere, String title ) {
 	return this.bookRepository.existsByGenereIdAndTitleStartingWithIgnoreCase(idGenere,title);
 }
 
+public List<Book> cercaLibroContenente(String filtroCercaLibro) {
+	return this.bookRepository.findByTitleContainingIgnoreCase(filtroCercaLibro);
+
+}
+
 
 
 }

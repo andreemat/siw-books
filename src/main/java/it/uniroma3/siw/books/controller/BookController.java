@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import it.uniroma3.siw.books.model.Author;
 import it.uniroma3.siw.books.model.Book;
@@ -32,6 +35,7 @@ import it.uniroma3.siw.books.service.*;
 import it.uniroma3.siw.books.validator.BookValidator;
 
 import jakarta.validation.Valid;
+import it.uniroma3.siw.books.model.User;
 
 @Controller
 public class BookController {
@@ -54,6 +58,10 @@ public class BookController {
 
 
 	@Autowired private BookValidator bookValidator;
+
+
+
+	@Autowired private CredentialService credentialService;
 
     @GetMapping("/books")
     public String books(Model model,
@@ -97,14 +105,26 @@ public class BookController {
     
     
     
-    @Transactional(readOnly = true)
+
 	@GetMapping("/books/{id}")
-	public String viewBook(@PathVariable("id") Long id, Model model) {
+	public String viewBook(@PathVariable("id") Long id,@AuthenticationPrincipal UserDetails userDetails, Model model) {
+
+
 		Book book =this.bookService.findById(id);
+		List<Review> reviews=book.getReviews();
+		if (userDetails != null) {
+	        User user = credentialService.getCredential(userDetails.getUsername()).getUser();
+			Review userReview=this.reviewService.findByUserAndBook(user, book);
+			if (userReview != null) {
+			    reviews.remove(userReview);
+			    model.addAttribute("userReview", userReview);
+			}
+	    }
 		model.addAttribute("book",book );
 		model.addAttribute("review",new Review());
 		model.addAttribute("authors",book.getAuthors());
-		model.addAttribute("reviews",book.getReviews());
+		
+		model.addAttribute("reviews",reviews);
 		Double media=this.reviewService.getAverageVote(id);
 		if(media!=null)
 			model.addAttribute("avgVote",String.format("%.2f",media));
@@ -141,7 +161,7 @@ public class BookController {
 
 	    
 	    if (authorIds != null && !authorIds.isEmpty()) {
-	        Set<Author> selectedAuthors = (Set<Author>) this.authorService.findAllById(authorIds);
+	        List<Author> selectedAuthors = this.authorService.findAllById(authorIds);
 	        book.setAuthors(selectedAuthors); 
 	    }
 
@@ -162,7 +182,7 @@ public class BookController {
 	public String showEditBookForm(@PathVariable("id") Long id, Model model) {
 		List<Author> otherAuthors = new ArrayList<>(authorService.findAll());
 	    Book book = (Book)this.bookService.findById(id); 
-	    Set<Author> bookAuthors = book.getAuthors();
+	    List<Author> bookAuthors = book.getAuthors();
 	    model.addAttribute("book", book); 
 	    model.addAttribute("authors", book.getAuthors());
 	    model.addAttribute("avgVote", this.reviewService.getAverageVote(id)); 
@@ -182,7 +202,7 @@ public class BookController {
 	                           @RequestParam(name = "filterSearchAuthor", required = false) String filterSearchAuthor) {
 
 	    Book book = this.bookService.findById(id);
-	    Set<Author> bookAuthors = book.getAuthors();
+	    List<Author> bookAuthors = book.getAuthors();
 
 	    List<Author> allAuthors;
 
@@ -256,7 +276,7 @@ public class BookController {
 	@GetMapping("/admin/books")
 	public String booksAdmin(@RequestParam(name = "filtroCercaLibro", required = false) String filtroCercaLibro,Model model) {
 		if(filtroCercaLibro!=null) {
-			model.addAttribute("books",this.bookService.cercaLibro(filtroCercaLibro));
+			model.addAttribute("books",this.bookService.cercaLibroContenente(filtroCercaLibro));
 			return "admin/booksAdmin.html";
 		}
 		model.addAttribute("books",bookService.getAllBooksAdmin());
