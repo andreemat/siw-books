@@ -55,8 +55,6 @@ public class BookController {
 
 	@Autowired private GenereService genereService;
 
-
-
 	@Autowired private BookValidator bookValidator;
 
 
@@ -152,21 +150,24 @@ public class BookController {
 	                          @RequestParam("copertinaFile") MultipartFile copertinaFile,
 	                          Model model) throws IOException {
 		
-	    this.bookValidator.validate(book, bindingResult);
+	    // Esegui solo se non ci sono errori da annotazioni come @NotNull
+	    if (!bindingResult.hasErrors()) {
+	        this.bookValidator.validate(book, bindingResult);
+	    }
+
 	    if (bindingResult.hasErrors()) {
 	        model.addAttribute("genres", this.genereService.findAll());
 	        model.addAttribute("authors", this.authorService.findAll());
 	        return "admin/FormNewBook.html";
 	    }
 
-	    
+	    // Gestione autori e copertina
 	    if (authorIds != null && !authorIds.isEmpty()) {
 	        List<Author> selectedAuthors = this.authorService.findAllById(authorIds);
 	        book.setAuthors(selectedAuthors); 
 	    }
 
 	    if (copertinaFile != null && !copertinaFile.isEmpty()) {
-	     
 	        Image image = new Image();
 	        image.setNomeFile(copertinaFile.getOriginalFilename());
 	        image.setDati(copertinaFile.getBytes());
