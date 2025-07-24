@@ -18,6 +18,7 @@ import it.uniroma3.siw.books.model.Genere;
 import it.uniroma3.siw.books.model.Image;
 import it.uniroma3.siw.books.repository.BookRepository;
 import it.uniroma3.siw.books.repository.ReviewRepository;
+
 import jakarta.validation.Valid;
 
 @Service
@@ -112,6 +113,13 @@ public List<Book> cercaLibroContenente(String filtroCercaLibro) {
 	return this.bookRepository.findByTitleContainingIgnoreCase(filtroCercaLibro);
 
 }
+
+public Book findByGenreIdAndTitle(Long id, String title) {
+	
+	return this.bookRepository.findByGenereIdAndTitle(id,title);
+}
+
+
 
 
 

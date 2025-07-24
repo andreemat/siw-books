@@ -16,7 +16,7 @@ public interface GenereRepository extends CrudRepository<Genere, Long> {
 	
 	
 	@Query("SELECT g FROM Genere g JOIN g.libri b GROUP BY g ORDER BY COUNT(b) DESC" )
-	List<Genere> mostPopoular(Pageable pageable);
+	List<Genere> mostPopular(Pageable pageable);
 
 
 

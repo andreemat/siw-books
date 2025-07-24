@@ -32,6 +32,10 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	boolean existsByGenereIdAndTitleStartingWithIgnoreCase(Long genere, String title);
 
 	List<Book> findByTitleContainingIgnoreCase(String filtroCercaLibro);
+
+
+
+	Book findByGenereIdAndTitle(Long id, String title);
 	
 
  

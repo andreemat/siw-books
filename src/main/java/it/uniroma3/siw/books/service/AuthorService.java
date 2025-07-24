@@ -45,7 +45,7 @@ public class AuthorService {
 	}
 	
 	public List<Author> mostReviewedAuthors(){
-		return this.authorRepository.findAutoriConPiuRecensioni(PageRequest.of(0, 10));
+		return this.authorRepository.findAutoriConPiuRecensioni(PageRequest.of(0, 6));
 	}
 
 	public List<Author> findAllById(List<Long> authorIds) {

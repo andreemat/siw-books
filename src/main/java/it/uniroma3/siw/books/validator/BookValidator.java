@@ -19,10 +19,13 @@ public class BookValidator implements Validator {
 	@Override
 	public void validate(Object o, Errors errors) {
 		Book book = (Book) o;
-		if(this.bookService.existsByGenreIdAndTitle(book.getGenere().getId(),book.getTitle())) {
-			errors.reject("book.duplicate", "Esiste già un libro con questo titolo per lo stesso genere");
+		
 
-		}
+			Book existingBook = bookService.findByGenreIdAndTitle(book.getGenere().getId(),book.getTitle());
+
+        if (existingBook!=null && !existingBook.getId().equals(book.getId())) {
+            errors.rejectValue("title", "duplicate", "Esiste già un libro con questo titolo e genere.");
+        }
 		
 	}
 

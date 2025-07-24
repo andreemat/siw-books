@@ -24,7 +24,7 @@ public class GenereService {
 	
 public List<Genere> findTheMostPopular() {
 		
-		return this.genereRepository.mostPopoular(PageRequest.of(0,8));
+		return this.genereRepository.mostPopular(PageRequest.of(0,8));
 	}
 
 	public Genere findGenreById(Long id) {
